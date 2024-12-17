@@ -495,3 +495,60 @@
 }
 /*** Footer End ***/
 
+
+/* .pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .page-link:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
+}
+
+.pagination .page-item.disabled .page-link:hover {
+    background-color: transparent;
+}
+.fruite-item {
+    height: 100%; /* Mengisi container */
+}
+.fruite-img {
+    height: 200px; /* Tinggi tetap untuk gambar */
+}
+.fruite-img img {
+    object-fit: cover;
+}
+.fruite-item .p-4 {
+    flex-grow: 1; /* Memastikan area konten fleksibel */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

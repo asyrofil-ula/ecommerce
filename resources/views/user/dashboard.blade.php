@@ -145,22 +145,27 @@
                         @if ($allProducts->count() > 0)
                         @foreach ($allProducts as $product)
                         <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="rounded position-relative fruite-item">
+                            <div class="rounded position-relative fruite-item h-100  d-flex flex-column">
                                 <div class="fruite-img ratio ratio-1x1">
                                     <img src="{{ asset('images/products/' . $product->image) }}" class="img-fluid w-100 h-100 rounded-top object-fit-cover" alt="{{ $product->name }}">
                                 </div>
                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{ $product->category->name }}</div>
                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                     <h4>{{ $product->name }}</h4>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
+                                    <div class="d-flex justify-content-between align-items-center mt-auto">
                                         <p class="text-dark fs-5 fw-bold mb-0">@currency($product->price)</p>
                                         <form action="{{ route('cart.add') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                <i class="fa fa-shopping-bag "></i>
                                             </button>
                                         </form>
+                                        <div class="text-center">
+                                            <a href="{{ route('shop.show', $product->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                <i class="fa fa-eye "></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -180,22 +185,27 @@
                         @if ($category->products->count() > 0)
                         @foreach ($category->products as $product)
                         <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="rounded position-relative fruite-item">
+                            <div class="rounded position-relative fruite-item h-100 w-100 d-flex flex-column">
                                 <div class="fruite-img ratio ratio-1x1">
                                     <img src="{{ asset('images/products/' . $product->image) }}" class="img-fluid w-100 h-100 rounded-top object-fit-cover" alt="{{ $product->name }}">
                                 </div>
                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{ $category->name }}</div>
                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                     <h4>{{ $product->name }}</h4>
-                                    <div class="d-flex justify-content-between flex-lg-wrap">
+                                    <div class="d-flex justify-content-between align-items-center mt-auto">
                                         <p class="text-dark fs-5 fw-bold mb-0">@currency($product->price)</p>
                                         <form action="{{ route('cart.add') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                <i class="fa fa-shopping-bag "></i>
                                             </button>
                                         </form>
+                                        <div class="text-center">
+                                            <a href="{{ route('shop.show', $product->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                <i class="fa fa-eye "></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

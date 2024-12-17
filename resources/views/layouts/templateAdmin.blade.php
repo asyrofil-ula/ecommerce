@@ -192,6 +192,14 @@
                         </ul>
                     </li>
 
+                    <!-- laporan -->
+                    <li class="menu-item {{ request()->is('admin/laporan') ? 'active' : '' }}">
+                        <a href="{{ url('admin/laporan') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ri-file-list-3-line"></i>
+                            <div data-i18n="Laporan">Laporan</div>
+                        </a>
+                    </li>
+
                     <!-- User -->
                     <li class="menu-item {{ request()->is('admin/users') ? 'active' : '' }}">
                         <a href="{{ url('admin/users') }}" class="menu-link">

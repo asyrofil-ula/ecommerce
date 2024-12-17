@@ -12,7 +12,7 @@
                     <form action="{{ route('admin.products') }}" method="GET" class="">
                         <div class="input-group position-relative ">
                             <span class="input-group-text bg-white border-end-0">
-                                <i class="bx bx-search text-muted"></i>
+                                <i class="ri-search-line ri-22px me-2"></i>
                             </span>
                             <input
                                 type="search"
@@ -22,12 +22,14 @@
                                 value="{{ request('search') }}"
                                 style="box-shadow: none;">
                             <button class="btn btn-primary" type="submit">
-                                <i class="bx bx-search"></i>
+                                <i class="ri-search-line ri-22px me-2"></i>
                             </button>
                         </div>
                     </form>
                     <!-- Trigger the first modal -->
-                    <a class="btn btn-primary text-white" id="myModalAdd" data-bs-toggle="modal" data-bs-target="#myInputAdd">+</a>
+                </div>
+                <div class="d-flex justify-content-end">
+                <a class="btn btn-primary btn-sm text-white justify-content-end align-items-end" id="myModalAdd" data-bs-toggle="modal" data-bs-target="#myInputAdd" style="margin-right: 10px">Tambah Product</a>
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -54,11 +56,11 @@
                                 <td>@currency($product->price)</td>
                                 <td><img src="{{ asset('images/products/'.$product->image) }}" alt="{{ $product->name }}" width="50"></td>
                                 <td>
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myInputUpdate-{{ $product->id }}">Edit</a>
+                                    <a href="#" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#myInputUpdate-{{ $product->id }}"><i class="ri-pencil-fill"></i></i></a>
                                     <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="d-inline delete-form">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-delete" data-id="{{ $product->id }}" data-name="{{ $product->name }}">Delete</button>
+                                        <button type="button" class="btn btn-danger btn-delete mt-3" data-id="{{ $product->id }}" data-name="{{ $product->name }}"><i class="ri-delete-bin-5-fill"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -67,8 +69,8 @@
                     </table>
 
                     <!-- Pagination Links -->
-                    <div class="d-flex justify-content-center">
-                        {{ $products->appends(request()->except('page'))->links() }}
+                    <div class="d-flex justify-content-center mt-5">
+                        {{ $products->appends(request()->except('page'))->links('vendor.pagination.bootstrap-4') }}
                     </div>
                 </div>
             </div>

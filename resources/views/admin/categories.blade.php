@@ -8,44 +8,41 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Category List</h5>
-                    <!-- search -->
-                     </div>
                     <!-- Trigger the first modal -->
-                    <a class="btn btn-primary text-white" id="myModalAdd" data-bs-toggle="modal" data-bs-target="#myInputAdd">Tambah Produk</a>
+                    <a class="btn btn-primary text-white" id="myModalAdd" data-bs-toggle="modal" data-bs-target="#myInputAdd">+</a>
                 </div>
-                <div class="card-body text-center">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($categories as $index => $category)
-                            <tr>
-                                <th scope="row">{{ $categories->firstItem() + $index }}</th>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->description }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myInputUpdate-{{ $category->id }}">Edit</a>
-                                    <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" class="d-inline delete-form">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-delete" data-id="{{ $category->id }}">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <!-- Pagination Links -->
-                    <div class="pagination justify-content-center ">
-                        <div class="d-flex justify-content-center text-center">
-                            {{ $categories->links() }}
-                        </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($categories as $index => $category)
+                        <tr>
+                            <th scope="row">{{ $categories->firstItem() + $index }}</th>
+                            <td>{{ $category->name }}</td>
+                            <td>{{ $category->description }}</td>
+                            <td>
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myInputUpdate-{{ $category->id }}"><i class="ri-pencil-fill"></i></a>
+                                <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" class="d-inline delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-danger btn-delete" data-id="{{ $category->id }}"><i class="ri-delete-bin-5-fill"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <!-- Pagination Links -->
+                <div class="pagination justify-content-center ">
+                    <div class="d-flex justify-content-center text-center">
+                        {{ $categories->links('vendor.pagination.bootstrap-4') }}
                     </div>
                 </div>
             </div>
@@ -118,8 +115,6 @@
 @endforeach
 @endsection
 @section('js')
-
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

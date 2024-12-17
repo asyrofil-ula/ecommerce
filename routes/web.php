@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ShopController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
@@ -7,6 +8,7 @@ use Monolog\Handler\RotatingFileHandler;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProfileUserController;
 use App\Http\Controllers\UserDashboardController;
@@ -50,19 +52,35 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin/orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::get('admin/orders/{id}', [OrderController::class, 'edit'])->name('admin.orders.edit');
     Route::get('admin/orders/{id}', [OrderController::class, 'show'])->name('admin.orders.show');
-    Route::put('admin/orders/{id}', [OrderController::class, 'update'])->name('admin.orders.update');
+    Route::post('admin/orders/{id}', [OrderController::class, 'update'])->name('admin.orders.update');
     Route::delete('admin/orders/{id}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
 
+    //routes users
+    Route::get('/admin/users', [AdminDashboardController::class, 'users'])->name('admin.users');
+    
+
+    //laporan penjualan
+    Route::get('/admin/laporan', [AdminDashboardController::class, 'report'])->name('admin.report');
 });
 
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+    Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shop.show');
     Route::get('/user/profile', [ProfileUserController::class, 'index'])->name('user.profile');
     Route::get('/user/cart', [CartController::class, 'index'])->name('user.cart');
     Route::post('/user/cart', [CartController::class, 'addToCart'])->name('cart.add');
     Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
     Route::delete('/user/cart/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.show');
+    Route::post('/checkout/proccess', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::get('/user/orders', [OrderController::class, 'userOrders'])->name('user.orders');
+    Route::post('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+    Route::get('/user/orders/success/{id}', [OrderController::class, 'orderSuccess'])->name('user.orders.success');
+    Route::get('/user/orders/pending/{id}', [OrderController::class, 'orderPending'])->name('user.orders.pending');
+    Route::get('/checkout/retry/{id}', [CheckoutController::class, 'retry'])->name('checkout.retry');
+    
 });
 
 Route::middleware('auth')->group(function () {
@@ -71,4 +89,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
