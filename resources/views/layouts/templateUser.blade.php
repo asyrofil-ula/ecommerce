@@ -43,33 +43,46 @@
         <div class="container px-0">
             <nav class="navbar navbar-light bg-white navbar-expand-xl">
                 <a href="index.html" class="navbar-brand">
-                    <h1 class="text-primary display-6">Fruitables</h1>
+                    <h1 class="text-primary display-6">Shopify</h1>
                 </a>
                 <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars text-primary"></span>
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
-                        <a href="{{route('user.dashboard')}}" class="nav-item nav-link active">Home</a>
-                        <a href="{{route('shop')}}" class="nav-item nav-link">Shop</a>
+                        <a href="{{route('user.dashboard')}}" class="nav-item nav-link {{request()->routeIs('user.dashboard') ? 'active' : ''}}">Home</a>
+                        <a href="{{route('shop')}}" class="nav-item nav-link {{request()->routeIs('shop') ? 'active' : ''}}">Shop</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a href="{{route('user.cart')}}" class="dropdown-item">Cart</a>
-                                <a href="{{route('user.orders')}}" class="dropdown-item">Order</a>
+                                <a href="{{route('user.cart')}}" class="dropdown-item {{request()->routeIs('user.cart') ? 'active' : ''}}">Cart</a>
+                                <a href="{{route('user.orders')}}" class="dropdown-item {{request()->routeIs('user.orders') ? 'active' : ''}}">Order</a>
                             </div>
                         </div>
                     </div>
+                    @if (Auth::check())
                     <div class="d-flex m-3 me-0">
-                        <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
+                        <!-- <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> -->
                         <a href="{{route('user.cart')}}" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{App\Models\Cart::count()}}</span>
+                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{$cartItemCount}}</span>
                         </a>
                         <a href="{{route('user.profile')}}" class="my-auto relative">
                             <i class="fas fa-user fa-2x"></i>
                         </a>
                     </div>
+                    @else
+                    <div class="d-flex m-3 me-0">
+                        <!-- <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> -->
+                        <a href="JavaScript:void(0)" class="position-relative me-4 my-auto" onclick="showAlert('Silahkan Login Terlebih Dahulu')">
+                            <i class="fa fa-shopping-bag fa-2x"></i>
+                            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{$cartItemCount}}</span>
+                        </a>
+                        <a href="{{route('login')}}" class="my-auto relative">
+                            <i class="fas fa-user fa-2x"></i>
+                        </a>
+                    </div>
+                    @endif
                 </div>
             </nav>
         </div>
@@ -176,7 +189,7 @@
 
 
     <!-- JavaScript Libraries -->
-     @yield('js')
+    @yield('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('lib/easing/easing.min.js')}}"></script>
@@ -211,6 +224,19 @@
             });
         });
     </script> -->
+    <script>
+        // Fungsi untuk menampilkan SweetAlert
+        function showAlert(message) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Tidak dapat mengakses keranjang',
+                text: message,
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#3085d6'
+            });
+        }
+    </script>
+
 
     <!-- Template Javascript -->
     <script src="{{asset('js/main.js')}}"></script>

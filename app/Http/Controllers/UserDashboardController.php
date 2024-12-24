@@ -11,15 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserDashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'role:user']);
-    }
 
     public function index()
     {
-        $allProducts = Product::with('category')->get();
-        $bestproducts = BestProducts::with('product')->get();
+        $allProducts = Product::with('category')->limit(16)->get();
+        $bestproducts = BestProducts::with('product')->limit(5)->get();
         // dd($bestproducts);
         $cart = Cart::where('user_id', Auth::id())->get();
         $categories = Category::with('products')->get();

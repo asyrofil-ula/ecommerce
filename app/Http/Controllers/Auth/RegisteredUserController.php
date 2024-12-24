@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -32,17 +33,18 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role'=> ['required', 'in:admin,seller,user'],
+           
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role' => 'user',
         ]);
+        // dd($user);
 
         Auth::login($user);
 
@@ -51,11 +53,6 @@ class RegisteredUserController extends Controller
 
     private function redirectPathByRole(string $role): string
     {
-        switch ($role) {
-            case 'admin':
-                return '/admin/dashboard';
-            default:
-                return '/user/dashboard';
-        }
+        return $role === 'admin' ? '/admin/dashboard' : '/';
     }
 }

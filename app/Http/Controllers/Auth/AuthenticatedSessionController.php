@@ -45,10 +45,8 @@ class AuthenticatedSessionController extends Controller
         switch ($role) {
             case 'admin':
                 return '/admin/dashboard';
-            case 'seller':
-                return '/seller/dashboard';
             default:
-                return '/user/dashboard';
+                return '/';
         }
     }
 

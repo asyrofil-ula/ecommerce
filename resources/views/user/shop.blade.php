@@ -52,6 +52,20 @@
                                     <div class="d-flex mb-2">
                                         <h5 class="fw-bold me-2">@currency($best->product->price)</h5>
                                     </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    <form action="{{ route('cart.add') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $best->product->id }}">
+                                        <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                            <i class="fa fa-shopping-bag "></i>
+                                        </button>
+                                    </form>
+                                    <div class="text-center">
+                                        <a href="{{ route('shop.show', $best->product->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                            <i class="fa fa-eye "></i>
+                                        </a>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                             @endforeach
@@ -77,17 +91,17 @@
                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom d-flex flex-column justify-content-between flex-grow-1">
                                         <h4>{{ $product->name }}</h4>
                                         <div class="d-flex justify-content-between align-items-center mt-auto">
-                                            <p class="text-dark fs-5 fw-bold mb-0">@currency($product->price)</p>                                       
+                                            <p class="text-dark fs-5 fw-bold mb-0">@currency($product->price)</p>
                                             <form action="{{ route('cart.add') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                 <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                    <i class="fa fa-shopping-bag "></i> 
+                                                    <i class="fa fa-shopping-bag "></i>
                                                 </button>
                                             </form>
                                             <div class="text-center">
                                                 <a href="{{ route('shop.show', $product->id) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                    <i class="fa fa-eye "></i> 
+                                                    <i class="fa fa-eye "></i>
                                                 </a>
                                             </div>
                                         </div>

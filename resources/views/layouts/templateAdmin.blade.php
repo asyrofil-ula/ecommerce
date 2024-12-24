@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="{{ asset('admin/vendor/libs/apex-charts/apex-charts.css') }}" />
 
     <!-- Page CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- Include MDB CSS -->
     <link href="https://cdn.jsdelivr.net/npm/mdb-ui-kit@5.0.0/dist/css/mdb.min.css" rel="stylesheet">
 
@@ -153,6 +154,7 @@
                     </a>
                 </div>
 
+
                 <div class="menu-inner-shadow"></div>
 
                 <ul class="menu-inner py-1">
@@ -220,12 +222,6 @@
                 <nav
                     class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                     id="layout-navbar">
-                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
-                        <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
-                            <i class="ri-menu-fill ri-24px"></i>
-                        </a>
-                    </div>
-
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <!-- Search -->
                         <div class="navbar-nav align-items-center">
@@ -241,62 +237,77 @@
                         <!-- /Search -->
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
-                            <!-- User Dropdown -->
-                            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                                <x-dropdown align="right" width="48">
-                                    <x-slot name="trigger">
-                                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                            <div>{{ Auth::user()->name }}</div>
-                                            <div class="ms-1">
-                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                </svg>
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle hide-arrow p-0"
+                                    href="javascript:void(0);"
+                                    id="userDropdown"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <div class="avatar avatar-online">
+                                        <i class="ri-user-line w-px-40 h-auto rounded-circle"></i>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end mt-3 py-2" aria-labelledby="userDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-2">
+                                                    <div class="avatar avatar-online">
+                                                        <i class="ri-user-line w-px-40 h-auto rounded-circle"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-0 small">{{ auth()->user()->name }}</h6>
+                                                    <small class="text-muted">{{ auth()->user()->role }}</small>
+                                                </div>
                                             </div>
-                                        </button>
-                                    </x-slot>
-
-                                    <x-slot name="content">
-                                        <x-dropdown-link :href="route('profile.edit')">
-                                            {{ __('Profile') }}
-                                        </x-dropdown-link>
-
-                                        <!-- Authentication -->
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <x-dropdown-link :href="route('logout')"
-                                                onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('Log Out') }}
-                                            </x-dropdown-link>
-                                        </form>
-                                    </x-slot>
-                                </x-dropdown>
-                            </div>
-                            <!--/ User Dropdown -->
-
-                            <!-- Responsive Settings Options -->
-                            <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
-                                <div class="pt-4 pb-1 border-t border-gray-200">
-                                    <div class="px-4">
-                                        <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                                    </div>
-
-                                    <div class="mt-3 space-y-1">
-                                        <x-responsive-nav-link :href="route('profile.edit')">
-                                            {{ __('Profile') }}
-                                        </x-responsive-nav-link>
-
-                                        <!-- Authentication -->
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <x-responsive-nav-link :href="route('logout')"
-                                                onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('Log Out') }}
-                                            </x-responsive-nav-link>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="ri-user-3-line ri-22px me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="ri-settings-4-line ri-22px me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <span class="d-flex align-items-center align-middle">
+                                                <i class="flex-shrink-0 ri-file-text-line ri-22px me-3"></i>
+                                                <span class="flex-grow-1 align-middle">Billing</span>
+                                                <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger h-px-20 d-flex align-items-center justify-content-center">4</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <div class="flex align-items-center px-4 pt-2 pb-1">
+                                            <form action="{{ route('logout') }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger align-items-center justify-content-center">
+                                                    <small class="align-middle">Logout</small>
+                                                    <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                            <!--/ User -->
                         </ul>
                     </div>
                 </nav>
@@ -379,6 +390,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('admin/js/toastr.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Event listener for delete buttons

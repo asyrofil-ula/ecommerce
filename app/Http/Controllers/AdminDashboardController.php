@@ -18,7 +18,25 @@ class AdminDashboardController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard');
+        $startDate = request('start_date') ? Carbon::parse(request('start_date')) : Carbon::now()->startOfMonth();
+        $endDate = request('end_date') ? Carbon::parse(request('end_date')) : Carbon::now()->endOfMonth();
+
+        $users = User::take(5)->get();
+        $totalSales = Order::whereBetween('created_at', [$startDate, $endDate])->sum('total_price');
+        $totalCustomers = User::whereHas('orders')->count();
+        $totalProducts = Product::count();
+        $totalRevenue = Order::whereBetween('created_at', [$startDate, $endDate])->sum('total_price');
+        $totalUsers = User::count();
+
+    return view('admin.dashboard', [
+        'users' => $users,
+        'totalSales' => $totalSales,
+        'totalCustomers' => $totalCustomers,
+        'totalProducts' => $totalProducts,
+        'totalRevenue' => $totalRevenue,
+        'totalUsers' => $totalUsers,
+
+    ]);
     }
 
     public function users()
