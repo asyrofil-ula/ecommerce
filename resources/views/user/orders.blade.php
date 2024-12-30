@@ -11,19 +11,20 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID Pesanan</th>
+                    <th>No</th>
+                    <th>Tanggal Pesanan</th>
                     <th>Total Harga</th>
                     <th>Metode Pembayaran</th>
                     <th>Status</th>
                     <th>Keterangan</th>
-                    <th>Tanggal Pesanan</th>
                     <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($orders as $order)
                 <tr>
-                    <td>{{ $order->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $order->created_at->format('d-m-Y') }}</td>
                     <td>@currency($order->total_price)</td>
                     <td>{{ $order->payment_method === 'midtrans' ? 'Midtrans' : 'COD' }}</td>
                     <td>
@@ -31,12 +32,15 @@
                         <span class="text-warning">Pending</span>
                         @elseif ($order->status === 'Processing')
                         <span class="text-info">Processing</span>
+                        @elseif ($order->status === 'Delivery')
+                        <span class="text-info">Delivery</span>
                         @elseif ($order->status === 'Completed')
                         <span class="text-success">Completed</span>
                         @elseif ($order->status === 'Cancelled')
                             <span class="text-danger">Cancelled</span>
                             @endif
                         </td>
+
                     <td>
                         @if($order->status === 'Pending')
                             @if($order->payment_method === 'midtrans')
@@ -45,8 +49,9 @@
                             <span class="text-secondary">Menunggu COD</span>
                             @endif
                             @elseif($order->status === 'Processing')
-                            <button class="btn btn-success btn-sm" onclick="updateOrderStatus('{{ $order->id }}', 'Completed')">Pesanan Selesai</button>
-                            <button class="btn btn-danger btn-sm" onclick="updateOrderStatus('{{ $order->id }}', 'Cancelled')">Batalkan Pesanan</button>
+                            <span class="text-info">Pesanan Sedang Diproses</span>
+                            @elseif($order->status === 'Delivery')
+                            <span class="text-info">Pesanan Sedang Dalam Perjalanan</span>
                             @elseif($order->status === 'Completed')
                             <span class="text-success">Pesanan Selesai</span>
                             @elseif($order->status === 'Cancelled')
@@ -55,8 +60,15 @@
                             <span class="text-secondary">Sedang Diproses</span>
                         @endif
                     </td>
-                    <td>{{ $order->created_at->format('d-m-Y') }}</td>
-                    <td>
+                    <td class="text-center px-3">
+                    @if($order->status === 'Pending')
+                            @if($order->payment_method === 'midtrans')
+                            @endif
+                            @elseif($order->status === 'Processing')
+                            <button class="btn btn-danger btn-sm" onclick="updateOrderStatus('{{ $order->id }}', 'Cancelled')">Batalkan Pesanan</button>
+                            @elseif($order->status === 'Delivery')
+                            <button class="btn btn-success btn-sm" onclick="updateOrderStatus('{{ $order->id }}', 'Completed')">Pesanan Selesai</button>
+                        @endif
                         <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewOrderModal{{ $order->id }}">Detail</a>
                     </td>
                 </tr>
@@ -95,6 +107,7 @@
                 <table class="table table-sm text-center">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama Produk</th>
                             <th>Jumlah</th>
                             <th>Harga</th>
@@ -104,6 +117,7 @@
                     <tbody>
                         @foreach ($order->orderDetails as $detail)
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $detail->product->name }}</td>
                             <td>{{ $detail->quantity }}</td>
                             <td>@currency($detail->product->price)</td>

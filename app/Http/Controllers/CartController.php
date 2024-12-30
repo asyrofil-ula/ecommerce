@@ -84,27 +84,19 @@ class CartController extends Controller
      
      
 
-    public function removeFromCart(Request $request)
-    {
-        $request->validate([
-            'cart_id' => 'required|exists:carts,id',
-        ]);
+     public function removeFromCart($id)
+     {
+         $cartItem = Cart::where('id', $id)->where('user_id', auth()->id())->first();
      
-        $cartItem = Cart::find($request->cart_id);
+         if ($cartItem) {
+             $cartItem->delete();
+             toastr()->success('Product removed from cart successfully!');
+             return redirect()->back();
+         }
+         toastr()->error('Product not found in cart!');
+         return redirect()->back();
+     }
      
-        if ($cartItem) {
-            $cartItem->delete();
-            return response()->json([
-                'success' => true,
-                'message' => 'Product deleted successfully !'
-            ]);
-        }
-
-        return response()->json([
-            'success' => false,
-            'message' => 'Product not found!'
-        ]);        
-    }
 
     public function checkout()
     {

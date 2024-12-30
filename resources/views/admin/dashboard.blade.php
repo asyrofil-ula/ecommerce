@@ -69,6 +69,15 @@
           </div>
         </div>
       </div>
+      <div class="col-12">
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title">Penjualan Bulanan</h5>
+            <canvas id="salesChart"></canvas>
+          </div>
+        </div>
+
+      </div>
       <!-- Table for User -->
       <div class="col-12">
         <div class="card overflow-hidden">
@@ -107,4 +116,50 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+  const ctx = document.getElementById('salesChart').getContext('2d');
+  const chartLabels = @json($chartLabels);
+  const chartValues = @json($chartValues);
+  const salesChart = new Chart(ctx, {
+    type: 'line', // Bisa diganti dengan 'bar', 'pie', dsb.
+    data: {
+      labels: chartLabels, // Data tanggal dari backend
+      datasets: [{
+        label: 'Total Penjualan',
+        data: chartValues, // Data total penjualan
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+        },
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Tanggal',
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Total Penjualan (IDR)',
+          },
+          beginAtZero: true,
+        }
+      }
+    }
+  });
+</script>
+
 @endsection

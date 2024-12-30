@@ -82,7 +82,7 @@ class OrderController extends Controller
 
         // Validasi input
         $request->validate([
-            'status' => 'required|in:Pending,Processing,Completed,Canceled',
+            'status' => 'required|in:Pending,Processing,Completed,Canceled,Delivery',
         ]);
 
         $order->status = $request->status;
@@ -97,7 +97,7 @@ class OrderController extends Controller
         // $this->authorize('update', $order); // Pastikan hanya pemilik pesanan yang bisa mengubah status
 
         $validated = $request->validate([
-            'status' => 'required|in:Completed,Cancelled,Pending,Processing',
+            'status' => 'required|in:Completed,Cancelled,Pending,Processing,Delivery',
         ]);
 
         $order->status = $validated['status'];

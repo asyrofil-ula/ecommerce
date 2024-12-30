@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
@@ -39,54 +40,71 @@ class CheckoutController extends Controller
             'email' => 'required|email',
             'payment_method' => 'required|in:midtrans,cod',
         ]);
-
+    
         $userId = Auth::id();
         $cartItems = Cart::where('user_id', $userId)->get();
-
+    
         if ($cartItems->isEmpty()) {
             return redirect()->back()->with('error', 'Keranjang Anda kosong!');
         }
-
+    
         // Hitung total harga
         $totalPrice = $cartItems->sum(function ($item) {
             return $item->product->price * $item->quantity;
         });
-
-        // Simpan data pesanan
-        $order = Order::create([
-            'user_id' => $userId,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'address' => $request->address,
-            'mobile' => $request->mobile,
-            'email' => $request->email,
-            'notes' => $request->order_notes,
-            'total_price' => $totalPrice,
-            'payment_method' => $request->payment_method,
-            'status' => $request->payment_method === 'cod' ? 'pending' : 'processing',
-        ]);
-
-        // Simpan item pesanan
-        foreach ($cartItems as $cartItem) {
-            OrderDetail::create([
-                'order_id' => $order->id,
-                'product_id' => $cartItem->product_id,
-                'quantity' => $cartItem->quantity,
-                'price' => $cartItem->product->price,
-                'total' => $cartItem->product->price * $cartItem->quantity,
+    
+        DB::beginTransaction();
+        try {
+            // Simpan data pesanan
+            $order = Order::create([
+                'user_id' => $userId,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'address' => $request->address,
+                'mobile' => $request->mobile,
+                'email' => $request->email,
+                'notes' => $request->order_notes,
+                'total_price' => $totalPrice,
+                'payment_method' => $request->payment_method,
+                'status' => $request->payment_method === 'cod' ? 'Pending' : 'Processing',
             ]);
-        }
-
-        // Kosongkan keranjang
-        Cart::where('user_id', $userId)->delete();
-
-        // Metode pembayaran
-        if ($request->payment_method === 'cod') {
-            // Jika COD
-            return redirect()->route('user.dashboard')->with('success', 'Pesanan Anda berhasil dibuat. Silakan tunggu konfirmasi.');
-        } else {
-            // Jika menggunakan Midtrans
-            return $this->processMidtrans($order, $cartItems);
+    
+            // Simpan item pesanan dan perbarui stok
+            foreach ($cartItems as $cartItem) {
+                $product = $cartItem->product;
+    
+                // Validasi stok
+                if ($product->stock < $cartItem->quantity) {
+                    throw new \Exception("Stok untuk produk {$product->name} tidak mencukupi.");
+                }
+    
+                // Kurangi stok
+                $product->decrement('stock', $cartItem->quantity);
+    
+                // Simpan detail order
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'product_id' => $cartItem->product_id,
+                    'quantity' => $cartItem->quantity,
+                    'price' => $product->price,
+                    'total' => $product->price * $cartItem->quantity,
+                ]);
+            }
+    
+            // Kosongkan keranjang
+            Cart::where('user_id', $userId)->delete();
+    
+            DB::commit();
+    
+            // Metode pembayaran
+            if ($request->payment_method === 'cod') {
+                return redirect()->route('user.dashboard')->with('success', 'Pesanan Anda berhasil dibuat. Silakan tunggu konfirmasi.');
+            } else {
+                return $this->processMidtrans($order, $cartItems);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 

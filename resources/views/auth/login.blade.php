@@ -10,7 +10,7 @@
                 <div class="card p-7">
                     <!-- Logo -->
                     <div class="app-brand justify-content-center mt-5">
-                        <a href="index.html" class="app-brand-link gap-3">
+                        <a href="{{ route('user.dashboard') }}" class="app-brand-link gap-3">
                             <span class="app-brand-logo demo">
                                 <span style="color: #9055fd">
                                     <svg width="30" height="24" viewBox="0 0 250 196" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,13 +73,13 @@
                                     </svg>
                                 </span>
                             </span>
-                            <span class="app-brand-text demo text-heading fw-semibold">Materio</span>
+                            <span class="app-brand-text demo text-heading fw-semibold">Magical Model</span>
                         </a>
                     </div>
                     <!-- /Logo -->
 
                     <div class="card-body mt-1">
-                        <h4 class="mb-1">Welcome to Materio! 👋🏻</h4>
+                        <h4 class="mb-1">Welcome to Magical Model! 👋🏻</h4>
                         <form id="formAuthentication" class="mb-5" action="{{ route('login') }}" method="POST">
                             @csrf
                             <div class="form-floating form-floating-outline mb-5">

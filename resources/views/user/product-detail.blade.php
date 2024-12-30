@@ -8,15 +8,15 @@
             <div class="col-lg-8 col-xl-9">
                 <div class="row g-4">
                     <div class="col-lg-6">
-                        <div class="border rounded">
-                            <a href="#">
-                                <img src="{{ asset('images/products/' . $product->image) }}" class="img-fluid rounded" alt="{{ $product->name }}">
-                            </a>
+
+                        <div class="ratio ratio-1x1" style="max-width: 400px; margin: 0 auto;">
+                            <img src="{{ asset('images/products/' . $product->image) }}" class="img-fluid rounded" alt="{{ $product->name }}">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <h4 class="fw-bold mb-3">{{ $product->name }}</h4>
                         <p class="mb-3">Category: {{ $product->category->name }}</p>
+                        <p class="mb-3">Stock: {{ $product->stock }}</p>
                         <h5 class="fw-bold mb-3">@currency($product->price)</h5>
                         <div class="input-group quantity mb-5" style="width: 100px;">
 
@@ -75,14 +75,17 @@
             <div class="owl-carousel vegetable-carousel justify-content-center">
                 @foreach ($relatedProducts as $related)
                 <div class="border border-primary rounded position-relative vesitable-item">
-                    <div class="vesitable-img">
-                        <img src="{{ asset('images/products/' . $related->image) }}" class="img-fluid w-100 rounded-top" alt="{{ $related->name }}">
+                    <div class="ratio ratio-1x1">
+                        <div class="vesitable-img">
+                            <img src="{{ asset('images/products/' . $related->image) }}" class="img-fluid w-100 rounded-top" alt="{{ $related->name }}">
+                        </div>
                     </div>
                     <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
                         {{ $related->category->name }}
                     </div>
                     <div class="p-4 pb-0 rounded-bottom">
                         <h4>{{ $related->name }}</h4>
+                        <p>Stock: {{ $related->stock }}</p>
                         <p>{{ $related->short_description }}</p>
                         <div class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold">@currency($related->price)</p>

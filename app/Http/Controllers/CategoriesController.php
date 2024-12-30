@@ -33,10 +33,15 @@ class CategoriesController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // dd($validated);
+        if ($request->hasFile('image')) {
+            $fileName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images/categories'), $fileName);
+            $validated['image'] = $fileName;
+        }
+
         Category::create($validated);
         toastr()->success('Category created successfully');
         return redirect()->route('admin.categories');
@@ -66,10 +71,18 @@ class CategoriesController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $fileName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images/categories'), $fileName);
+            $validated['image'] = $fileName;
+        }
 
         $category = Category::findOrFail($id);
         $category->update($validated);
+
         toastr()->success('Category updated successfully');
         return redirect()->route('admin.categories');
     }

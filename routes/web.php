@@ -60,22 +60,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //laporan penjualan
     Route::get('/admin/laporan', [AdminDashboardController::class, 'report'])->name('admin.report');
+    Route::get('/admin/laporan/pdf', [AdminDashboardController::class, 'reportPdf'])->name('admin.report.pdf');
 });
 
 
-Route::middleware(['auth', 'role:user'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/user/profile', [ProfileUserController::class, 'index'])->name('user.profile');
     Route::get('/user/cart', [CartController::class, 'index'])->name('user.cart');
     Route::post('/user/cart', [CartController::class, 'addToCart'])->name('cart.add');
     Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
-    Route::delete('/user/cart/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::delete('/user/cart/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.show');
     Route::post('/checkout/proccess', [CheckoutController::class, 'process'])->name('checkout.process');
     Route::get('/user/orders', [OrderController::class, 'userOrders'])->name('user.orders');
     Route::post('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
-    // Route::get('/user/orders/success/{id}', [OrderController::class, 'orderSuccess'])->name('user.orders.success');
-    // Route::get('/user/orders/pending/{id}', [OrderController::class, 'orderPending'])->name('user.orders.pending');
-    // Route::get('/checkout/retry/{id}', [CheckoutController::class, 'retry'])->name('checkout.retry');
 });
 Route::get('/', [UserDashboardController::class, 'index'])->name('user.dashboard');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');

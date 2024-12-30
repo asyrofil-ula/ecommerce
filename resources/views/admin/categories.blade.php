@@ -18,6 +18,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
+                            <th scope="col">Image</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -27,6 +28,7 @@
                             <th scope="row">{{ $categories->firstItem() + $index }}</th>
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->description }}</td>
+                            <td><img src="{{ asset('images/categories/'.$category->image) }}" alt="{{ $category->name }}" width="50"></td>
                             <td>
                                 <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myInputUpdate-{{ $category->id }}"><i class="ri-pencil-fill"></i></a>
                                 <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" class="d-inline delete-form">
@@ -61,7 +63,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('admin.categories.store') }}" method="POST">
+                <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Category Name</label>
@@ -70,6 +72,11 @@
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
                         <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description" required></textarea>
+                    </div>
+                    <!-- gambar -->
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image" name="image">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -92,7 +99,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
+                <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
@@ -102,6 +109,12 @@
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
                         <textarea class="form-control" id="description" name="description" rows="3" required>{{ $category->description }}</textarea>
+                    </div>
+                    <!-- gambar -->
+                    <div class="mb-3">
+                        <img src="{{ asset('images/categories/'.$category->image) }}" alt="{{ $category->name }}" width="50">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image" name="image">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save Changes</button>

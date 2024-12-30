@@ -42,8 +42,8 @@
     <div class="container-fluid fixed-top">
         <div class="container px-0">
             <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                <a href="index.html" class="navbar-brand">
-                    <h1 class="text-primary display-6">Shopify</h1>
+                <a href="{{route('user.dashboard')}}" class="navbar-brand">
+                    <h1 class="text-primary display-6">Magical Model</h1>
                 </a>
                 <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars text-primary"></span>
@@ -95,19 +95,19 @@
     <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
         <div class="container py-5">
             <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
-                <div class="row g-4">
+                <div class="row g-4 justify-content-between">
                     <div class="col-lg-3">
                         <a href="#">
-                            <h1 class="text-primary mb-0">Fruitables</h1>
-                            <p class="text-secondary mb-0">Fresh products</p>
+                            <h1 class="text-primary mb-0">Outfit</h1>
+                            <p class="text-secondary mb-0">High Quality</p>
                         </a>
                     </div>
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="position-relative mx-auto">
                             <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email">
                             <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-lg-3">
                         <div class="d-flex justify-content-end pt-3">
                             <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-twitter"></i></a>
@@ -118,7 +118,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row g-5">
+            <div class="row g-5 justify-content-between">
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-item">
                         <h4 class="text-light mb-3">Why People Like us!</h4>
@@ -129,32 +129,18 @@
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="d-flex flex-column text-start footer-item">
-                        <h4 class="text-light mb-3">Shop Info</h4>
-                        <a class="btn-link" href="">About Us</a>
-                        <a class="btn-link" href="">Contact Us</a>
-                        <a class="btn-link" href="">Privacy Policy</a>
-                        <a class="btn-link" href="">Terms & Condition</a>
-                        <a class="btn-link" href="">Return Policy</a>
-                        <a class="btn-link" href="">FAQs & Help</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="d-flex flex-column text-start footer-item">
                         <h4 class="text-light mb-3">Account</h4>
-                        <a class="btn-link" href="">My Account</a>
-                        <a class="btn-link" href="">Shop details</a>
-                        <a class="btn-link" href="">Shopping Cart</a>
-                        <a class="btn-link" href="">Wishlist</a>
-                        <a class="btn-link" href="">Order History</a>
-                        <a class="btn-link" href="">International Orders</a>
+                        <a class="btn-link" href="{{route('user.profile')}}">My Account</a>
+                        <a class="btn-link" href="{{route('user.cart')}}">Shopping Cart</a>
+                        <a class="btn-link" href="{{route('user.orders')}}">Order History</a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-item">
                         <h4 class="text-light mb-3">Contact</h4>
                         <p>Address: 1429 Netus Rd, NY 48247</p>
-                        <p>Email: Example@gmail.com</p>
-                        <p>Phone: +0123 4567 8910</p>
+                        <p>Email: asyrofilula@gmail.com</p>
+                        <p>Phone: 6282138615565</p>
                         <p>Payment Accepted</p>
                         <img src="{{asset('img/payment.png')}}" class="img-fluid" alt="">
                     </div>
@@ -169,13 +155,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Magical Model</a>, All right reserved.</span>
                 </div>
                 <div class="col-md-6 my-auto text-center text-md-end text-white">
                     <!-- /*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
                     <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
                     <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/ -->
-                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
+                    Designed By <a class="border-bottom" href="https://instagram.com/rofieee.id/">Asyrofil Ula</a> Distributed By <a class="border-bottom" href="https://instagram.com/rofieee.id/">Asyrofil Ula</a>
                 </div>
             </div>
         </div>

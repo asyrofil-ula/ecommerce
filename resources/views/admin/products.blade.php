@@ -204,11 +204,8 @@
                         <label for="image-{{ $product->id }}" class="form-label">Gambar Produk</label>
                         <input type="file" class="form-control" id="image-{{ $product->id }}" name="image" accept="image/*">
                         <small class="text-muted">Biarkan kosong jika tidak ingin mengubah gambar.</small>
-                        @if ($product->image)
-                        <div class="mt-2">
-                            <img src="{{ asset('images/products' . $product->image) }}" alt="Gambar {{ $product->name }}" class="img-thumbnail" style="max-width: 100px;">
-                        </div>
-                        @endif
+                        <div id="imageError-{{ $product->id }}" class="text-danger"></div>
+                        <img src="{{ asset('images/products/'.$product->image) }}" alt="{{ $product->name }}" width="50">
                     </div>
 
                     <div class="modal-footer">

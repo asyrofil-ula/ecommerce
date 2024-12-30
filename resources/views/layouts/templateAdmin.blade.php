@@ -83,7 +83,7 @@
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo">
-                    <a href="index.html" class="app-brand-link">
+                    <a href="{{ route('admin.dashboard') }}" class="app-brand-link">
                         <span class="app-brand-logo demo me-1">
                             <span style="color: var(--bs-primary)">
                                 <svg width="30" height="24" viewBox="0 0 250 196" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -146,7 +146,7 @@
                                 </svg>
                             </span>
                         </span>
-                        <span class="app-brand-text demo menu-text fw-semibold ms-2">Materio</span>
+                        <span class="app-brand-text demo menu-text fw-semibold ms-2" style="font-size: 14px">Magical Model</span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -224,7 +224,7 @@
                     id="layout-navbar">
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <!-- Search -->
-                        <div class="navbar-nav align-items-center">
+                        <!-- <div class="navbar-nav align-items-center">
                             <div class="nav-item d-flex align-items-center">
                                 <i class="ri-search-line ri-22px me-2"></i>
                                 <input
@@ -233,7 +233,7 @@
                                     placeholder="Search..."
                                     aria-label="Search..." />
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /Search -->
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -269,30 +269,7 @@
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="ri-user-3-line ri-22px me-2"></i>
-                                            <span class="align-middle">My Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="ri-settings-4-line ri-22px me-2"></i>
-                                            <span class="align-middle">Settings</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <span class="d-flex align-items-center align-middle">
-                                                <i class="flex-shrink-0 ri-file-text-line ri-22px me-3"></i>
-                                                <span class="flex-grow-1 align-middle">Billing</span>
-                                                <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger h-px-20 d-flex align-items-center justify-content-center">4</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
+                                   
                                     <li>
                                         <div class="flex align-items-center px-4 pt-2 pb-1">
                                             <form action="{{ route('logout') }}" method="POST">
@@ -331,22 +308,9 @@
                                     document.write(new Date().getFullYear());
                                 </script>
                                 , made with <span class="text-danger"><i class="tf-icons ri-heart-fill"></i></span> by
-                                <a href="https://themeselection.com" target="_blank" class="footer-link">ThemeSelection</a>
+                                <a href="https://instagram.com/rofieee.id/" target="_blank" class="footer-link">Asyrofil 'Ula</a>
                             </div>
-                            <div class="d-none d-lg-inline-block">
-                                <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                                <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-
-                                <a
-                                    href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation/"
-                                    target="_blank"
-                                    class="footer-link me-4">Documentation</a>
-
-                                <a
-                                    href="https://github.com/themeselection/materio-bootstrap-html-admin-template-free/issues"
-                                    target="_blank"
-                                    class="footer-link">Support</a>
-                            </div>
+                            
                         </div>
                     </div>
                 </footer>
@@ -391,6 +355,8 @@
     <script src="{{asset('admin/js/toastr.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Event listener for delete buttons

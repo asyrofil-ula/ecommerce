@@ -14,7 +14,7 @@
                         <th scope="col">Price</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Total</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,11 +58,14 @@
                             </p>
                         </td>
                         <td>
-                            <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                <i class="fa fa-times text-danger"></i>
-                            </button>
+                            <form action="{{ route('cart.remove', $cartItem->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-md rounded-circle bg-light border mt-4">
+                                    <i class="fa fa-times text-danger"></i>
+                                </button>
+                            </form>
                         </td>
-
                     </tr>
                     @endforeach
                 </tbody>

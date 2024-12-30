@@ -79,7 +79,7 @@
                                     </svg>
                                 </span>
                             </span>
-                            <span class="app-brand-text demo text-heading fw-semibold">Materio</span>
+                            <span class="app-brand-text demo text-heading fw-semibold">Magical Model</span>
                         </a>
                     </div>
                     <!-- /Logo -->

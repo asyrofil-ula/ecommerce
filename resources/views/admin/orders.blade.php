@@ -30,7 +30,7 @@
                 <table class="table text-center">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -43,7 +43,7 @@
                     <tbody>
                         @foreach ($orders as $order)
                         <tr>
-                            <td>{{ $order->id }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $order->first_name.' '.$order->last_name }}</td>
                             <td>{{ $order->email }}</td>
                             <td>{{ $order->mobile }}</td>
@@ -53,6 +53,8 @@
                             <td><span class="text-warning">Pending</span></td>
                             @elseif ($order->status === 'Processing')
                             <td><span class="text-info">Processing</span></td>
+                            @elseif ($order->status === 'Delivery')
+                            <td><span class="text-info">Delivery</span></td>
                             @elseif ($order->status === 'Completed')
                             <td><span class="text-success">Completed</span></td>
                             @elseif ($order->status === 'Cancelled')
@@ -83,6 +85,7 @@
                                                     {{ $order->status === 'Completed' ? 'disabled' : '' }}>
                                                     <option value="Pending" {{ $order->status === 'Pending' ? 'selected' : '' }}>Pending</option>
                                                     <option value="Processing" {{ $order->status === 'Processing' ? 'selected' : '' }}>Processing</option>
+                                                    <option value="Delivery" {{ $order->status === 'Delivery' ? 'selected' : '' }}>Delivery</option>
                                                     <option value="Completed" {{ $order->status === 'Completed' ? 'selected' : '' }}>Completed</option>
                                                     <option value="Canceled" {{ $order->status === 'Canceled' ? 'selected' : '' }}>Canceled</option>
                                                 </select>

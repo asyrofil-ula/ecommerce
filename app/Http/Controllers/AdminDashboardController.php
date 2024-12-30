@@ -8,6 +8,8 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class AdminDashboardController extends Controller
 {
@@ -22,21 +24,39 @@ class AdminDashboardController extends Controller
         $endDate = request('end_date') ? Carbon::parse(request('end_date')) : Carbon::now()->endOfMonth();
 
         $users = User::take(5)->get();
-        $totalSales = Order::whereBetween('created_at', [$startDate, $endDate])->sum('total_price');
+        $orderDetails = OrderDetail::whereHas('order', function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('created_at', [$startDate, $endDate])
+                ->where('status', 'Completed'); // Filter hanya untuk status "Completed"
+        })->get();
+        $totalSales = $orderDetails->sum(function ($orderDetail) {
+            return $orderDetail->quantity * $orderDetail->price;
+        });
         $totalCustomers = User::whereHas('orders')->count();
         $totalProducts = Product::count();
         $totalRevenue = Order::whereBetween('created_at', [$startDate, $endDate])->sum('total_price');
         $totalUsers = User::count();
 
-    return view('admin.dashboard', [
-        'users' => $users,
-        'totalSales' => $totalSales,
-        'totalCustomers' => $totalCustomers,
-        'totalProducts' => $totalProducts,
-        'totalRevenue' => $totalRevenue,
-        'totalUsers' => $totalUsers,
+        // Data untuk chart penjualan bulanan
+        $salesData = Order::selectRaw('DATE(created_at) as date, SUM(total_price) as total')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->where('status', 'Completed')
+            ->get();
 
-    ]);
+        $chartLabels = $salesData->pluck('date');
+        $chartValues = $salesData->pluck('total');
+
+        return view('admin.dashboard', [
+            'users' => $users,
+            'totalSales' => $totalSales,
+            'totalCustomers' => $totalCustomers,
+            'totalProducts' => $totalProducts,
+            'totalRevenue' => $totalRevenue,
+            'totalUsers' => $totalUsers,
+            'chartLabels' => $chartLabels,
+            'chartValues' => $chartValues,
+        ]);
     }
 
     public function users()
@@ -70,6 +90,7 @@ class AdminDashboardController extends Controller
             return $orderDetail->quantity * $orderDetail->price;
         });
 
+        $order = Order::whereBetween('created_at', [$startDate, $endDate])->paginate(5);
         // Total Produk Terjual
         $totalProductsSold = $orderDetails->sum('quantity');
 
@@ -81,6 +102,16 @@ class AdminDashboardController extends Controller
         });
         $productIds = $productsSales->keys();
         $products = Product::whereIn('id', $productIds)->get();
+        // Data untuk chart penjualan bulanan
+        $salesData = Order::selectRaw('DATE(created_at) as date, SUM(total_price) as total')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->where('status', 'Completed')
+            ->get();
+
+        $chartLabels = $salesData->pluck('date');
+        $chartValues = $salesData->pluck('total');
 
         return view('admin.report', compact(
             'orderDetails',
@@ -89,7 +120,41 @@ class AdminDashboardController extends Controller
             'productsSales',
             'startDate',
             'endDate',
-            'products'
+            'products',
+            'order',
+            'chartLabels',
+            'chartValues'
         ));
     }
+
+    public function reportPdf(Request $request)
+{
+    $startDate = Carbon::parse($request->input('start_date', Carbon::now()->startOfMonth()));
+    $endDate = Carbon::parse($request->input('end_date', Carbon::now()->endOfMonth()));
+
+    $orderDetails = OrderDetail::with('product', 'order')
+        ->whereHas('order', function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('created_at', [$startDate, $endDate])
+                ->where('status', 'Completed'); // Filter hanya untuk status "Completed"
+        })
+        ->get();
+
+    $totalSales = $orderDetails->sum(function ($orderDetail) {
+        return $orderDetail->quantity * $orderDetail->price;
+    });
+
+    $order = Order::whereBetween('created_at', [$startDate, $endDate])->paginate(5);
+    $totalProductsSold = $orderDetails->sum('quantity');
+
+    $pdf = Pdf::loadView('admin.report-pdf', [
+        'orderDetails' => $orderDetails,
+        'totalSales' => $totalSales,
+        'totalProductsSold' => $totalProductsSold,
+        'startDate' => $startDate,
+        'endDate' => $endDate,
+        'order' => $order,
+    ]);
+
+    return $pdf->download('laporan_penjualan.pdf');
+}
 }

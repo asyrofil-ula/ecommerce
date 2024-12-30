@@ -27,20 +27,21 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-md-12 col-lg-7">
-                <h4 class="mb-3 text-secondary">100% Organic Foods</h4>
-                <h1 class="mb-5 display-3 text-primary">Organic Veggies & Fruits Foods</h1>
+                <h4 class="mb-3 text-secondary">100% Quality</h4>
+                <h1 class="mb-5 display-3 text-primary">Outfit Of The Day</h1>
             </div>
             <div class="col-md-12 col-lg-5">
                 <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                     <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active rounded">
-                            <img src="{{asset('img/hero-img-1.png')}}" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
-                            <a href="#" class="btn px-4 py-2 text-white rounded">Fruites</a>
+                        @foreach ($categories as $key => $category)
+                        <div class="carousel-item {{ $key === 0 ? 'active' : '' }} rounded">
+                            <div class="ratio ratio-1x1"  style="max-width: 200px; margin: 0 auto;">
+                                <img src="{{ asset('images/categories/' . $category->image) }}" class="img-fluid w-100 h-100 bg-secondary rounded" alt="{{ $category->name }}">
+                            </div>
+                            <a class="btn px-4 py-2 text-white rounded">{{ $category->name }}</a>
                         </div>
-                        <div class="carousel-item rounded">
-                            <img src="{{asset('img/hero-img-2.jpg')}}" class="img-fluid w-100 h-100 rounded" alt="Second slide">
-                            <a href="#" class="btn px-4 py-2 text-white rounded">Vesitables</a>
-                        </div>
+                        @endforeach
+
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -51,6 +52,7 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -69,7 +71,7 @@
                     </div>
                     <div class="featurs-content text-center">
                         <h5>Free Shipping</h5>
-                        <p class="mb-0">Free on order over $300</p>
+                        <p class="mb-0">Free</p>
                     </div>
                 </div>
             </div>
@@ -230,7 +232,7 @@
 <!-- Vesitable Shop Start-->
 <div class="container-fluid vesitable py-5">
     <div class="container py-5">
-        <h1 class="mb-0">Fresh Organic Vegetables - Tops</h1>
+        <h1 class="mb-0">Outfit Of The Day  - Tops</h1>
         <div class="owl-carousel vegetable-carousel justify-content-center">
             @php
             $topsCategory = $categories->firstWhere('name', 'Tops');
@@ -296,7 +298,7 @@
     <div class="container py-5">
         <div class="text-center mx-auto mb-5" style="max-width: 700px;">
             <h1 class="display-4">Bestseller Products</h1>
-            <p>Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
+            <p>Bestseller Product in Our Store</p>
         </div>
         <div class="row g-4">
             <div class="row g-4">
