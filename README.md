@@ -7,4 +7,42 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-##
+### Clone Project
+```
+git clone https://github.com/asyrofil-ula/ecommerce.git
+```
+```
+cd ecommerce
+```
+## Setup Project
+- install package 
+```
+composer install
+npm install
+```
+- copy .env.example to .env
+```
+cp .env.example .env
+```
+- generate APP_KEY
+```
+php artisan key:generate
+```
+- setup midtrans according to your account 
+```
+MIDTRANS_SERVER_KEY=
+MIDTRANS_CLIENT_KEY=
+MIDTRANS_IS_PRODUCTION=
+MIDTRANS_MERCHANT_ID=
+```
+
+### Run Project
+- Server
+```
+php artisan serve
+```
+- Frontend
+```
+npm run dev
+```
+

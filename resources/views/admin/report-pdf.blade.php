@@ -46,34 +46,5 @@
             </tr>
         </tfoot>
     </table>
-
-    <h3>Detail Penjualan</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Customer</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>Total Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-            $number = 1;
-            @endphp
-            @foreach ($order as $item)
-            @if ($item->status == 'Completed')
-            <tr>
-                <td>{{ $number++ }}</td>
-                <td>{{ $item->user->name }}</td>
-                <td>{{ ucfirst($item->status) }}</td>
-                <td>{{ $item->created_at->format('Y-m-d') }}</td>
-                <td>@currency($item->total_price)</td>
-            </tr>
-            @endif
-            @endforeach
-        </tbody>
-    </table>
 </body>
 </html>

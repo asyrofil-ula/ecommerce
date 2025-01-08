@@ -104,6 +104,10 @@
                         @endforeach
                     </tbody>
                 </table>
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center py-3">
+                    {{ $orders->links('pagination::bootstrap-5') }}
+                </div>
             </div>
         </div>
     </div>
