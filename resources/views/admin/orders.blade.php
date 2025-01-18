@@ -82,19 +82,19 @@
                                             <div class="mb-3">
                                                 <label for="status{{ $order->id }}" class="form-label">Status</label>
                                                 <select id="status{{ $order->id }}" name="status" class="form-select"
-                                                    {{ $order->status === 'Completed' ? 'disabled' : '' }}>
+                                                    {{ $order->status === 'Completed' || $order->status === 'Cancelled' ? 'disabled' : '' }}>
                                                     <option value="Pending" {{ $order->status === 'Pending' ? 'selected' : '' }}>Pending</option>
                                                     <option value="Processing" {{ $order->status === 'Processing' ? 'selected' : '' }}>Processing</option>
                                                     <option value="Delivery" {{ $order->status === 'Delivery' ? 'selected' : '' }}>Delivery</option>
                                                     <option value="Completed" {{ $order->status === 'Completed' ? 'selected' : '' }}>Completed</option>
-                                                    <option value="Canceled" {{ $order->status === 'Canceled' ? 'selected' : '' }}>Canceled</option>
+                                                    <option value="Cancelled" {{ $order->status === 'Cancelled' ? 'selected' : '' }}>Canceled</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-success"
-                                                {{ $order->status === 'Completed' ? 'disabled' : '' }}>Save Changes</button>
+                                                {{ $order->status === 'Completed' || $order->status === 'Cancelled' ? 'disabled' : '' }}>Save Changes</button>
                                         </div>
                                     </form>
 
@@ -137,6 +137,7 @@
                 <p><strong>Customer:</strong> {{ $order->user->name }}</p>
                 <p><strong>Alamat:</strong> {{ $order->address }}</p>
                 <p><strong>Tanggal:</strong> {{ $order->created_at->format('d-m-Y H:i') }}</p>
+                <p><strong>Notes : </strong> {{ $order->notes }}</p>
                 <hr>
                 <!-- Table Produk -->
                 <table class="table table-sm text-center">

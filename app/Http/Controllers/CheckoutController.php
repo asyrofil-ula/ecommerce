@@ -34,12 +34,12 @@ class CheckoutController extends Controller
     {
         $request->validate([
             'first_name' => 'required',
-            'last_name' => 'required',
             'address' => 'required',
             'mobile' => 'required',
             'email' => 'required|email',
             'payment_method' => 'required|in:midtrans,cod',
         ]);
+        // dd($request->all());
     
         $userId = Auth::id();
         $cartItems = Cart::where('user_id', $userId)->get();
@@ -59,7 +59,6 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'user_id' => $userId,
                 'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
                 'address' => $request->address,
                 'mobile' => $request->mobile,
                 'email' => $request->email,
@@ -68,6 +67,8 @@ class CheckoutController extends Controller
                 'payment_method' => $request->payment_method,
                 'status' => $request->payment_method === 'cod' ? 'Pending' : 'Processing',
             ]);
+
+            // dd($order);
     
             // Simpan item pesanan dan perbarui stok
             foreach ($cartItems as $cartItem) {
@@ -77,7 +78,6 @@ class CheckoutController extends Controller
                 if ($product->stock < $cartItem->quantity) {
                     throw new \Exception("Stok untuk produk {$product->name} tidak mencukupi.");
                 }
-    
                 // Kurangi stok
                 $product->decrement('stock', $cartItem->quantity);
     
@@ -132,7 +132,6 @@ class CheckoutController extends Controller
 
         $customerDetails = [
             'first_name' => $order->first_name,
-            'last_name' => $order->last_name,
             'email' => $order->email,
             'phone' => $order->mobile,
             'address' => $order->address,

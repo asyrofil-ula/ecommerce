@@ -8,35 +8,31 @@
             @csrf
             <div class="row g-5">
                 <div class="col-md-12 col-lg-6 col-xl-6">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-6">
-                            <div class="form-item w-100">
-                                <label class="form-label my-3">First Name<sup>*</sup></label>
-                                <input type="text" class="form-control" name="first_name" required>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-lg-6">
+                    <div class="form-item">
+                        <label class="form-label my-3">First Name<sup>*</sup></label>
+                        <input type="text" class="form-control" name="first_name" value="{{ Auth::user()->name }}" required>
+                    </div>
+                    <!-- <div class="col-md-12 col-lg-6">
                             <div class="form-item w-100">
                                 <label class="form-label my-3">Last Name<sup>*</sup></label>
-                                <input type="text" class="form-control" name="last_name" required>
+                                <input type="text" class="form-control" name="last_name" value="{{ Auth::user()->last_name }}" required>
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
                     <div class="form-item">
                         <label class="form-label my-3">Address <sup>*</sup></label>
-                        <input type="text" class="form-control" name="address" placeholder="House Number Street Name" required>
+                        <input type="text" class="form-control" name="address" placeholder="House Number Street Name" value="{{ Auth::user()->address }}" required>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Mobile<sup>*</sup></label>
-                        <input type="tel" class="form-control" name="mobile" required>
+                        <input type="tel" class="form-control" name="mobile" value="{{ Auth::user()->phone }}" required>
                     </div>
                     <div class="form-item pb-3">
                         <label class="form-label my-3 p-2">Email Address<sup>*</sup></label>
-                        <input type="email" class="form-control" name="email" required>
+                        <input type="email" class="form-control" name="email" value="{{ Auth::user()->email }}" required>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Order Notes</label>
-                        <textarea name="order_notes" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Order Notes (Optional)"></textarea>
+                        <textarea name="order_notes" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Order Notes (Optional)" required></textarea>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6 col-xl-6">

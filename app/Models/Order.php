@@ -14,7 +14,7 @@ class Order extends Model
         'status',
         'payment_method',
         'first_name',
-        'last_name',
+        // 'last_name',
         'email',
         'mobile',
         'address',

@@ -110,6 +110,34 @@
                                 <label for="email">Email</label>
                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                             </div>
+                            <div class="form-floating form-floating-outline mb-5">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="phone"
+                                    name="phone"
+                                    value="{{ old('phone') }}"
+                                    placeholder="Enter your phone"
+                                    autofocus
+                                    required
+                                />
+                                <label for="phone">Phone</label>
+                                <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                            </div>
+                            <div class="form-floating form-floating-outline mb-5">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="address"
+                                    name="address"
+                                    value="{{ old('address') }}"
+                                    placeholder="Enter your address"
+                                    autofocus
+                                    required
+                                />
+                                <label for="address">Address</label>
+                                <x-input-error :messages="$errors->get('address')" class="mt-2" />
+                            </div>
                             <div class="mb-5 form-password-toggle">
                                 <div class="input-group input-group-merge">
                                     <div class="form-floating form-floating-outline">

@@ -34,6 +34,8 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'phone' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
            
         ]);
@@ -41,12 +43,16 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
             'password' => Hash::make($request->password),
             'role' => 'user',
         ]);
         // dd($user);
 
         Auth::login($user);
+
+        session()->flash('toastr', 'Login successful! .');
 
         return redirect($this->redirectPathByRole($user->role));
     }

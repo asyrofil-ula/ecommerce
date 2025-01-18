@@ -28,6 +28,14 @@ cp .env.example .env
 ```
 php artisan key:generate
 ```
+- migrate database
+```
+php artisan migrate
+```
+- make admin user
+```
+php artisan db:seed --class=AdminTableSeeder
+```
 - setup midtrans according to your account 
 ```
 MIDTRANS_SERVER_KEY=
